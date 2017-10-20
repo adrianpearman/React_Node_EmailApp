@@ -22,7 +22,8 @@ passport.use(new GoogleStrategy({
   clientID: keys.googleClientID,
   clientSecret: keys.googleClientSecret,
   // controls the redirect to log into a users google account
-  callbackURL: '/auth/google/callback'
+  callbackURL: '/auth/google/callback',
+  proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       // validation to insure the ID is not currently in the database
