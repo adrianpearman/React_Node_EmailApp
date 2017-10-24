@@ -31,13 +31,13 @@ billingRoutes(app);
 
 // this line of code will only run when on the main server
 if (process.env.NODE_ENV === 'production') {
-  // when the production version is run, the application will use the build files 
+  // when the production version is run, the application will use the build files
   app.use(express.static('client/build'));
   const path = require('path');
 
   // this line of code will cause the express router to re-route any url that the whole application doesnt make reference of, to the index.html file
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname. 'client', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 
 
