@@ -18,7 +18,6 @@ class Stripe extends Component{
           Add Credits
         </button>
       </StripeCheckout>
-
     )
   }
 }
