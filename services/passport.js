@@ -25,18 +25,34 @@ passport.use(new GoogleStrategy({
   callbackURL: '/auth/google/callback',
   proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    // version 1 - pre refactoring a no asynchronus calls
+    // (accessToken, refreshToken, profile, done) => {
+    //   // validation to insure the ID is not currently in the database
+    //   // this line below finds the first instance of the User ID
+    //   User.findOne({ googleID: profile.id}).then((existingUser) => {
+    //     if (existingUser) {
+    //       done(null, existingUser)
+    //     }else {
+    //       // this line below will create a new instance of User
+    //       new User({googleID: profile.id})
+    //       .save()
+    //       .then(user => done(null, user))
+    //     }
+    //   })
+    // }
+    // version 2 - refactored version w/ asychronus calls
+    async (accessToken, refreshToken, profile, done) => {
       // validation to insure the ID is not currently in the database
       // this line below finds the first instance of the User ID
-      User.findOne({ googleID: profile.id}).then((existingUser) => {
+      const existingUser = await User.findOne({ googleID: profile.id})
+
         if (existingUser) {
           done(null, existingUser)
-        }else {
+        } else {
           // this line below will create a new instance of User
-          new User({googleID: profile.id})
-          .save()
-          .then(user => done(null, user))
+          const user = await new User({googleID: profile.id}).save()
+          done(null, user)
         }
-      })
-  })
+    }
+  )
 );
