@@ -18,4 +18,5 @@ ReactDOM.render(
  )
 
 console.log('STRIPE_SECRET_KEY', process.env.REACT_APP_STRIPE_KEY);
+console.log('SECRET_KEY', process.env.STRIPE_SECRET_KEY);
 console.log('Environment is', process.env.NODE_ENV);
