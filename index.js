@@ -4,12 +4,11 @@ const keys = require('./config/keys');
 const cookieSession = require ('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-// model is placed before passport due to loading sequence. for future projects using passport, be sure to have the model placed before the passport files
 require('./models/User');
 require('./models/Survey');
+// model is placed before passport due to loading sequence. for future projects using passport, be sure to have the model placed before the passport files
 require('./services/passport');
 
-mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURI, { useMongoClient: true})
 const app = express();
 
