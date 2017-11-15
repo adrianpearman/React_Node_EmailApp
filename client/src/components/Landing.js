@@ -5,7 +5,7 @@ class Landing extends Component {
     return(
       <div style={{textAlign: 'center'}}>
         <h1>
-          Email App
+          Email Survey App
         </h1>
         Collect Feedback
       </div>

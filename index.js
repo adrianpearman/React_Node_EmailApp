@@ -1,13 +1,12 @@
 const express = require('express');
-const authRoutes = require ('./routes/authRoutes');
-const billingRoutes = require ('./routes/billingRoutes');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require ('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 // model is placed before passport due to loading sequence. for future projects using passport, be sure to have the model placed before the passport files
-require('./models/user');
+require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI, { useMongoClient: true})
@@ -26,8 +25,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-authRoutes(app);
-billingRoutes(app);
+require ('./routes/authRoutes')(app);
+require ('./routes/billingRoutes')(app);
+require ('./routes/surveyRoutes')(app);
+
+
 
 // this line of code will only run when on the main server
 if (process.env.NODE_ENV === 'production') {
@@ -45,4 +47,4 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000
 // The application is being made available on localhost:5000
 app.listen(PORT)
-// 
+//
