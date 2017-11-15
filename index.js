@@ -9,11 +9,11 @@ require('./models/User');
 require('./models/Survey');
 require('./services/passport');
 
+mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURI, { useMongoClient: true})
 const app = express();
 
 app.use(bodyParser.json());
-
 // cookies will need to be used to manage whther a user has used the application recently
 app.use(
   cookieSession({
@@ -21,7 +21,6 @@ app.use(
     keys: [keys.cookieKey] // the cookie session is able to select from multiple cookie key values so having it an array is best practice
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -29,14 +28,11 @@ require ('./routes/authRoutes')(app);
 require ('./routes/billingRoutes')(app);
 require ('./routes/surveyRoutes')(app);
 
-
-
 // this line of code will only run when on the main server
 if (process.env.NODE_ENV === 'production') {
   // when the production version is run, the application will use the build files
   app.use(express.static('client/build'));
   const path = require('path');
-
   // this line of code will cause the express router to re-route any url that the whole application doesnt make reference of, to the index.html file
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
