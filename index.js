@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const keys = require('./config/keys');
 const cookieSession = require ('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const keys = require('./config/keys');
 require('./models/User');
 require('./models/Survey');
 // model is placed before passport due to loading sequence. for future projects using passport, be sure to have the model placed before the passport files
