@@ -1,0 +1,94 @@
+The purposes of this app is to create a survey response service that will allow a company to send
+
+Frameworks and Languages used:
+MongoDB - A database to hold the information created
+PassportJS - Used to authenticate a user
+ExpressJS - used as a router to perform network requests
+Stripe - used to validate and collect payments to use the application
+React & Redux - used to create the front end experience for the client
+
+Node - a javascript runtime used to execute code outside of the browser
+Express - Library that runs in the Node runtime. Makes dealing with http requests easier
+
+PassportJS library components -
+1) passport: general helper for handling authentication in Express apps
+2)passport strategy: helpers for authenticating one specific method (for each social media connection, a new strategy must be installed)
+
+for server side its best to use Common JS Modules not ES2015 (e.g it's best top use const express = require('express') vs import express from 'express')
+
+When Heroku Runs, it will run the specific versions in the engines section under the package.json file
+
+clientID is a public key that can be shared with the public
+clientSecret is a private token which should not be shared, either voluntarily or not
+
+nodemon is used to auto reload the application instead of manually restarting the application. placed in the "dev" script file so to use it, the command 'npm run dev' is used
+
+
+Mongoose is used to connect to a MongoDB database. The reason for creating a database is simply to verify if a user has used our site before by verifying the google auth id.
+
+Cookie Session - because express has no way of tracking or using a cookie natively, this module is added to complete this task
+
+When creating a production and development database, it is best practice to utilize two separate login passwords and user id's to help prevent data breaches
+
+React - For installing it to this project. we begin with the command 'sudo npm install -g create-react-app' inside of the server folder. Once it is installed we then run the prompt: 'create-react-app #whateveertheprojectnameis'
+
+React will run on a separate server than the node server. It is possible to run them on a single server but the reason for running two separate servers is because its actually time efficient as the react server includes webpack, babel and the development bundling; thus meaning that we dont need to create everything from scratch in a single server.
+
+In our application, in order to run both servers at the same time, we will use the plug-in concurrently. when we set up the server package.json file, within the scripts section, we define the start up script for both the server and the client folders (in this case node index.js and npm run start --prefix client). We then set up the concurrently section with "concurrently \"server\" \"client\" "; all with the prefix of "dev". to call this, we then run the script of npm run dev. This will run both of the servers at the same time with one prompt. As a technicality, it is very possible to simply run two terminals at the same time with same effects, however this works best as its only one terminal to be concerned with.
+
+One concern however with this process is that having any hard coded links in the project, will cause issues when changing between development and production code. for the case of this project we add in a proxy which will be available to validate on the fly, the difference between the two environments. the example we use in this app is :
+
+"proxy":{
+  "#whatever the hardcoded link":{
+    "target": "dev server environment"
+  }
+}
+
+This will only effect the product while it is in development. once this is pushed to production on heroku, the proxy code is no longer needed which in turn allows the hard coded information to be appended to the heroku url which will allow the sign in request to work properly.
+
+for the styling of the application, we are using Materialize CSS for styling. It is possible to include as a CDN on the main index but to follow the trend of importing it directly into the main index.js client file. by convention it is presented as 'import #filelocation'. no direct pathway is required as without it, webpack will assume it is a node module (which it is!).
+
+reduxThunk -
+
+For payment processing, its best to not store any of the users information or store any raw data. To make things easier on our end, we should use outside vendors (like stripe or recurly). for our application we will be using stripe checkout (also known as checkout.js). we use the file in two different locations. first we install the stripe module on the client side file to have the built in plugin show on the users screen. we then install a second plug in on the server side to create the charge and properly submit it to the stripe server.
+
+we also require the body-parser npm module to parse incoming request bodies in a middleware before the handlers, available under the req.body property.
+
+When adding development environment files to a React application, the conventional way is to add an .env file to the application.
+
+in order to create the email component, which will send the emails out to the clients, the plug in we will be using is SendGrid
+
+This application also makes use of lodash to perform array manipulations as React does not natively support those functions
+
+Webhooks are used in this application to grab the callback request from the email received by the client. With sendgrid it will automatically send post request to the production url. however with the development side, the process has to be done through an external service. in this course we will use the localtunnel
+
+
+grab a list of all of the events provided to us
+map through all of the received responses from sendgrid
+extract the path from the URL
+extract the surveyID and the choice
+return surveyID, email and choice, discarding records without the surveyID and choice
+remove all of the undefined values in the array
+
+in order to help us complete these tasks, we make use of lodash module and path parser module. We also use the built in npm module URL to parse through the URL properties returned in the survey requests
+
+
+Mongo Queries
+example:
+email = adrian@pearman.com
+choice = 'yes' || 'no';
+
+Survey.updateOne({
+    id: surveyId,
+    recipients: {
+    $elemMatch: { email: email, responded: false }
+    }
+  },
+  {
+    $inc: { [choice]: 1 },
+    $set: { 'recipients.$.responded': true}
+})
+
+optionms for adding additional features:
+improve the design
+allow users to delete surveys that have been created
