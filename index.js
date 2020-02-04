@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
 const cookieSession = require("cookie-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
@@ -39,7 +40,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // this below code will allow the code to be run on either heroku or locally
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 // The application is being made available on localhost:5000
-app.listen(PORT);
-//
+app.listen(PORT, () => {
+  console.log(`Running on PORT:${PORT}`);
+});
