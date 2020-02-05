@@ -1,38 +1,32 @@
 {
-  "name": "server",
+  "name": "React_Node_EmailApp",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "engines": {
-    "node": "8.1.1",
-    "npm": "5.0.3"
-  },
+  "repository": "git@github.com:adrianpearman/React_Node_EmailApp.git",
+  "author": "",
+  "license": "ISC",
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "client": "npm run start --prefix client",
-    "client-build": "npm run build --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "cd client; yarn start",
+    "client-build": "cd client; yarn run build",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\""
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^6.5.1",
-    "body-parser": "^1.18.2",
-    "concurrently": "^3.6.1",
-    "cookie-session": "^2.0.0-beta.3",
-    "express": "^4.16.2",
-    "localtunnel": "^1.8.3",
-    "lodash": "^4.17.4",
-    "mongodb": "^2.2.33",
-    "mongoose": "^4.13.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
+    "cookie-session": "^1.4.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "mongodb": "^3.5.2",
+    "mongoose": "^5.8.11",
     "ngrok": "^3.2.7",
-    "nodemon": "^1.12.1",
-    "passport": "^0.4.0",
+    "nodemon": "^2.0.2",
+    "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "path-parser": "^2.0.2",
+    "path-parser": "^6.1.0",
     "sendgrid": "^5.2.3",
-    "stripe": "^5.3.0"
+    "stripe": "^8.14.0"
   }
 }

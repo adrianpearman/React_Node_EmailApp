@@ -11,8 +11,10 @@ require("./models/Survey");
 // models are placed before passport due to loading sequence. for future projects using passport, be sure to have the model placed before the passport files
 require("./services/passport");
 
-mongoose.connect(keys.mongoURI, { useMongoClient: true });
+mongoose.connect(keys.mongoURI);
 const app = express();
+
+const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 // cookies will need to be used to manage whther a user has used the application recently
@@ -36,20 +38,14 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-}
-
-const PORT = process.env.PORT || 5000;
-
-// ngrok
-if (!process.env.NODE_ENV === "production") {
+} else {
+  //ngrok
   (async function() {
     const url = await ngrok.connect(PORT);
-
     console.log(url);
   })();
 }
 
 app.listen(PORT, () => {
-  console.log(keys.redirectDomain);
   console.log(`Running on PORT:${PORT}`);
 });
