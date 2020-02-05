@@ -12,13 +12,13 @@
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "client-build": "npm run build --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "webhook": "./sendgrid_webhook.sh"
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.5.1",
     "body-parser": "^1.18.2",
     "concurrently": "^3.6.1",
     "cookie-session": "^2.0.0-beta.3",
@@ -27,6 +27,7 @@
     "lodash": "^4.17.4",
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.0",
+    "ngrok": "^3.2.7",
     "nodemon": "^1.12.1",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
