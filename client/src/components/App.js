@@ -10,23 +10,6 @@ import Landing from "./Landing";
 import Dashboard from "./Dashboard";
 import SurveyNew from "./surveyComponents/SurveyNew";
 
-// version 1
-// const App = () => {
-//   return (
-//     <div className='container'>
-//       <BrowserRouter>
-//         <div>
-//           <Header />
-//           <Route exact={true} path='/' component={Landing} />
-//           <Route exact={true} path='/surveys' component={Dashboard} />
-//           <Route path='/surveys/new' component={SurveyNew} />
-//         </div>
-//       </BrowserRouter>
-//     </div>
-//   )
-// }
-
-// version 2
 class App extends Component {
   // this version includes life cycle methods to automatically load the current user as soon as the component is rendered
   componentDidMount() {
